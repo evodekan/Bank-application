@@ -2,36 +2,86 @@ import 'dart:io';
 
 import 'models/account.dart';
 import 'models/person.dart';
+import 'models/role.dart';
+import 'models/user.dart';
+
+var users = <User>[];
 
 void main() {
-  print("Welcome to Bank of Kigali!\n");
-  stdout.write(
-    "We can help you to create an account, Do you want to open a new account? Yes/No:  ",
-  );
-  var answer = stdin.readLineSync();
-  if (answer == "Yes") {
-    print("Okay, lets quickly create your new account.");
-    stdout.write("Your first name: ");
-    var firstname = stdin.readLineSync();
-    stdout.write("Your last name: ");
-    var lastname = stdin.readLineSync();
-    stdout.write("Your age: ");
-    var age = int.parse(stdin.readLineSync());
-    stdout.write("Your NID: ");
-    var nId = stdin.readLineSync();
-    stdout.write("Your country: ");
-    var country = stdin.readLineSync();
+  print("Welcome to Bank of Kigali!\n1: Sign in\n2: Sign up");
 
-    var account = Account(
-      Person(
-        nId,
-        firstname,
-        lastname,
-        age,
-        country: country,
-      ),
-    );
+  String answer = stdin.readLineSync();
 
-    print("Dear ${account.owner.names}, Thank you for banking with us!");
+  if (answer == "1") {
+    signin();
+  } else if (answer == "2") {
+    signUp();
+
+    signin();
   }
 }
+
+void signUp() {
+  print("Okay, lets quickly create your new account.");
+  stdout.write("Your first name: ");
+  String firstname = stdin.readLineSync();
+  stdout.write("Your last name: ");
+  String lastname = stdin.readLineSync();
+  stdout.write("Your age: ");
+  int age = int.parse(stdin.readLineSync());
+  stdout.write("Your NID: ");
+  String nId = stdin.readLineSync();
+  stdout.write("Your country: ");
+  String country = stdin.readLineSync();
+  stdout.write("Your email: ");
+  String email = stdin.readLineSync();
+  stdout.write("Your password: ");
+  String password = stdin.readLineSync();
+
+  Person newPerson = new Person(
+    nId,
+    firstname,
+    lastname,
+    age,
+    country: country,
+  );
+
+  Account newAccount = new Account();
+
+  User newUser = new User(
+    Role.Customer,
+    email,
+    password,
+    newPerson,
+    account: newAccount,
+  );
+
+  users.add(newUser);
+
+  print("Account was sssss");
+}
+
+void signin() {
+  stdout.write("Your email: ");
+  String email = stdin.readLineSync();
+  stdout.write("Your password: ");
+  String password = stdin.readLineSync();
+
+  User user;
+
+  try {
+    user = users
+        .firstWhere((user) => user.password == password && user.email == email);
+  } catch (e) {
+    print(e);
+  }
+  if (user != null) {}
+}
+
+///
+/// iffgg
+/// iiiiii
+/// jjjkj
+/// jjj
+/// jjjk
+/// hhjjjj
